@@ -1,0 +1,43 @@
+CREATE TABLE item
+(
+item_id INT NOT NULL PRIMARY KEY,
+item_name VARCHAR(30) NOT NULL,
+description VARCHAR(50) NOT NULL,
+price MONEY NOT NULL,
+supplier_id INT NOT NULL 
+);
+
+
+CREATE TABLE supplier
+(
+supplier_id INT NOT NULL PRIMARY KEY,
+supplier_name VARCHAR(30) NOT NULL,
+supp_phone_num VARCHAR(30) NOT NULL, 
+supp_email_address VARCHAR(30) NOT NULL
+);
+
+
+CREATE TABLE customer
+(
+customer_id INT NOT NULL PRIMARY  KEY,
+customer_name VARCHAR(30) NOT NULL,
+cust_phone_num VARCHAR(30) NOT NULL,
+cust_email_address VARCHAR(30) NOT NULL,
+);
+
+CREATE TABLE order
+(
+order_id INT NOT NULL PRIMARY KEY,
+item_id INT NOT NULL,
+customer_id INT NOT NULL,
+date_time DATETIME NOT NULL,
+order_quantity INT NOT NULL, -- Can be used to addd or subtract from Inventory Table inv_quantity
+total_cost MONEY NOT NULL,
+);
+
+CREATE TABLE inventory -- May seem tedious but needed to track current quantities
+(
+item_id INT NOT NULL,
+item_name VARCHAR(30) NOT NULL,
+inv_quantity INT NOT NULL,
+);
