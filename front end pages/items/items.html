@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="items.css" />
+  </head>
+  <body>
+    <div class="nav">
+      <a href="" id="items" class="here">Items</a>
+      <a href="" id="orders">Orders</a>
+      <a href="" id="Customers">Customers</a>
+      <a href="" id="plants">Plants</a>
+    </div>
+    <div id="main">
+      <div id="left">
+        <div id="addItem" class="itemBox">
+          <form action="">
+            <h2>Add Items</h2>
+            <table>
+              <tr>
+                <td>
+                  <label for="item_id">Item id: </label>
+                </td>
+                <td>
+                  <input type="text" id="item_id" />
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <label for="item_name">Item name: </label>
+                </td>
+                <td>
+                  <input type="text" id="item_name" />
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <label for="item_supplier id">Item supplier id: </label>
+                </td>
+                <td>
+                  <input type="text" id="item_supplier id" />
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <label for="item_price ">Item price (usd): </label>
+                </td>
+                <td>
+                  <input type="text" id="item_price " />
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <label for="item_description">Item description: </label>
+                </td>
+                <td>
+                  <input type="text" id="item_description" />
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <label for="item_count">Item count: </label>
+                </td>
+                <td>
+                  <input type="text" id="item_count" />
+                </td>
+              </tr>
+            </table>
+            <button id="addItem">Send Item to inventory!</button>
+          </form>
+        </div>
+        <div id="removeItem" class="itemBox">
+          <h2>Remove Item</h2>
+          <form action="">
+            <tr>
+                <table>
+
+                    <td>
+                        <label for="item_id">Item id: </label>
+                    </td>
+                    <td>
+                        <input type="text" id="item_id" />
+                    </td>
+                    <td>
+                        <button>search</button>
+                    </td>
+                </tr>
+            </table>
+            
+          </form>
+          <table class="dataTable">
+            <thead>
+              <td >ID</td>
+              <td >Item Name</td>
+              <td >Item Count</td>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1203</td>
+                <td>misc item</td>
+                <td>20</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class = "buttonContainer">
+              <button id="deleteItem">Delete  Item from inventory!</button>
+          </div>
+        </div>
+      </div>
+      <div id="right">
+        <div id="findItem" class="itemBox">
+          <h2>Find Items</h2>
+          <div class="search">
+            <label for="search">Search</label>
+            <input
+              type="text"
+              class="searchBox"
+              placeholder="Enter ID or Category"
+            />
+          </div>
+          <table class="dataTable scroll">
+            <thead>
+              <td >ID</td>
+              <td >Item Name</td>
+              <td >Item Count</td>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1203</td>
+                <td>misc item</td>
+                <td>20</td>
+              </tr>
+              <tr>
+                <td>1203</td>
+                <td>misc item</td>
+                <td>20</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div id="changeQuantity" class="itemBox">
+            <h2>Change Quantity</h2>
+            <table class="dataTable scroll">
+                <thead>
+                  <td >ID</td>
+                  <td >+ / -</td>
+                  <td >Count</td>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><input type="text" placeholder = "Item Id" class = "tableInput"></td>
+                    <td><label for="add">+</label><input type="radio" value = "1" id = "add"><span>/</span><label for="subtract">-</label><input type="radio" value = "0" id = "subtract"></td>
+                    <td><input type="text" placeholder = "Item Id" class = "tableInput"></td>
+                  </tr>
+                </tbody>
+              </table>
+              <div class = "buttonContainer">
+                <button id="sendChanges">sendChanges!</button>
+            </div>
+        </div>
+      </div>
+    </div>
+    <script src="items.js"></script>
+  </body>
+</html>
