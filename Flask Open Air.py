@@ -11,7 +11,7 @@ class Item(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     item_name = db.Column(db.String(50))
     item_supplier_id = db.Column(db.String(50))
-    item_price = db.Column(db.String(50))
+    item_price = db.Column(db.Float(precision=2))
     item_description = db.Column(db.String(50))
     item_count = db.Column(db.Integer)
 
@@ -21,21 +21,26 @@ class Item(db.Model):
         self.item_price = item_price
         self.item_description = item_description
         self.item_count = item_count
-
+# Supposed to allow searching of items using different features.
 @app.route('/items', methods=['GET'])
 def get_all_items():
-    items = Item.query.all()
+    search_query = request.args.get('q')
+    if search_query:
+        items = Item.query.filter(or_(Item.item_name.contains(search_query), Item.item_supplier_id.contains(search_query))).all()
+    else:
+        items = Item.query.all()
     result = []
     for item in items:
         item_data = {}
         item_data['id'] = item.id
         item_data['item_name'] = item.item_name
         item_data['item_supplier_id'] = item.item_supplier_id
-        item_data['price'] = item.price
+        item_data['price'] = item.item_price
         item_data['item_description'] = item.item_description
         item_data['item_count'] = item.item_count
         result.append(item_data)
     return jsonify(result)
+
 
 @app.route('/items/', methods=['GET'])
 def get_item(id):
