@@ -63,14 +63,21 @@ body{
     display:flex;
     align-items: center;
 }
-.search label {
+.search button {
+    border:none;
     border-right: 2px solid lightgrey;
     line-height: 25px;
     padding: 0px 5px;
     font-weight: bold;
     cursor: pointer;
+    outline:none;
+    background-color:transparent;
+    border-radius: 11px 0 0 11px;
 }
 
+.search button:hover {
+    background-color:lightgrey;
+}
 
 .searchBox{
     width:80%;
