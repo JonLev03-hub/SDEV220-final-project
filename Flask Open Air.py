@@ -1,5 +1,6 @@
 from flask import Flask, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import or_
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///OpenAirGardens.db'
@@ -21,7 +22,8 @@ class Item(db.Model):
         self.item_price = item_price
         self.item_description = item_description
         self.item_count = item_count
-# Supposed to allow searching of items using different features.
+
+# Allow searching of items using different features
 @app.route('/items', methods=['GET'])
 def get_all_items():
     search_query = request.args.get('q')
@@ -42,7 +44,7 @@ def get_all_items():
     return jsonify(result)
 
 
-@app.route('/items/', methods=['GET'])
+@app.route('/items/<int:id>', methods=['GET'])
 def get_item(id):
     item = Item.query.get(id)
     if not item:
@@ -51,7 +53,7 @@ def get_item(id):
     item_data['id'] = item.id
     item_data['item_name'] = item.item_name
     item_data['item_supplier_id'] = item.item_supplier_id
-    item_data['price'] = item.price
+    item_data['price'] = item.item_price
     item_data['item_description'] = item.item_description
     item_data['item_count'] = item.item_count
     return jsonify(item_data)
@@ -63,12 +65,12 @@ def add_item():
     price = request.json['price']
     item_description = request.json['item_description']
     item_count = request.json['item_count']
-    item = Item(item_name=item_name, item_supplier_id=item_supplier_id, price=price, item_description=item_description, item_count=item_count)
+    item = Item(item_name=item_name, item_supplier_id=item_supplier_id, item_price=price, item_description=item_description, item_count=item_count)
     db.session.add(item)
     db.session.commit()
     return jsonify({'message': 'Item added successfully'})
 
-@app.route('/items/', methods=['PUT'])
+@app.route('/items/<int:id>', methods=['PUT'])
 def update_item(id):
     item = Item.query.get(id)
     if not item:
@@ -80,20 +82,8 @@ def update_item(id):
     item_count = request.json['item_count']
     item.item_name = item_name
     item.item_supplier_id = item_supplier_id
-    item.price = price
+    item.item_price = price
     item.item_description = item_description
     item.item_count = item_count
     db.session.commit()
-    return jsonify({'message': 'Item updated successfully'})
-
-@app.route('/items/', methods=['DELETE'])
-def delete_item(id):
-    item = Item.query.get(id)
-    if not item:
-        return jsonify({'error': 'Item not found'})
-    db.session.delete(item)
-    db.session.commit()
-    return jsonify({'message': 'Item deleted successfully'})
-
-if __name__ == '__main__':
-    app.run(debug=True)
+    return jsonify({'message':
