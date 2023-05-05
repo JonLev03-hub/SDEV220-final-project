@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="./customers.css" />
+  </head>
+  <body>
+    <div class="nav">
+      <a href="" id="customers">items</a>
+      <a href="" id="orders">Orders</a>
+      <a href="" id="Customers" class="here">Customers</a>
+      <a href="" id="suppliers">Suppliers</a>
+    </div>
+    <div id="main">
+      <div id="left">
+        <div id="addcustomer" class="customerBox">
+          <form action="" id = "addCustomerForm">
+            <h2>Add customers</h2>
+            <table>
+              <tr>
+                <td>
+                  <label for="id">customer id: </label>
+                </td>
+                <td>
+                  <input type="text" id="id" class = "addcustomerInput"/>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <label for="name">customer name: </label>
+                </td>
+                <td>
+                  <input type="text" id="name" class = "addcustomerInput"/>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <label for="phone">customer phone: </label>
+                </td>
+                <td>
+                  <input type="text" id="phone" class = "addcustomerInput"/>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <label for="email">customer email: </label>
+                </td>
+                <td>
+                  <input type="text" id="email" class = "addcustomerInput"/>
+                </td>
+              </tr>
+            </table>
+            <button id="addCustomerButton">Add new Customer!</button>
+          </form>
+        </div>
+        <div id="removecustomer" class="customerBox">
+          <h2>Remove customer</h2>
+          <form action="">
+            <tr>
+                <table>
+
+                    <td>
+                        <label for="phone">customer phone: </label>
+                    </td>
+                    <td>
+                        <input type="text" id="deleteInput" />
+                    </td>
+                </tr>
+            </table>
+            
+          </form>
+          <div class = "buttonContainer">
+              <button id="deleteCustomer">Delete  customer!</button>
+          </div>
+        </div>
+      </div>
+      <div id="right">
+      
+      </div>
+      <div id="findcustomer" class="customerBox">
+        <h2>Find customers</h2>
+        <div class="search">
+          <button id="searchButton">Search</button>
+          <input
+            type="text"
+            class="searchBox"
+            placeholder="Enter Phone number or leave blank for All"
+            id = "searchInput"
+          />
+        </div>
+        <table class="dataTable scroll">
+          <thead>
+            <td >ID</td>
+            <td >Name</td>
+            <td >phone number</td>
+            <td >email</td>
+          </thead>
+          <tbody id = "searchResults">
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <script src="customers.js"></script>
+  </body>
+</html>
