@@ -9,7 +9,7 @@
   </head>
   <body>
     <div class="nav">
-      <a href="" id="Items" >orders</a>
+      <a href="" id="Items" >Items</a>
       <a href="" id="Orders" class="here">Orders</a>
       <a href="" id="Customers">Customers</a>
       <a href="" id="suppliers">Suppliers</a>
@@ -30,54 +30,34 @@
               </tr>
               <tr>
                 <td>
-                  <label for="name">order name: </label>
+                  <label for="name" class = "deleteItem">customer id: </label>
                 </td>
                 <td>
-                  <input type="text" id="name" class = "addorderInput"/>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <label for="supplier_id">order supplier id: </label>
-                </td>
-                <td>
-                  <input type="text" id="supplier_id" class = "addorderInput"/>
+                  <input type="text" id="customer" class = "addorderInput"/>
                 </td>
               </tr>
               <tr>
                 <td>
-                  <label for="price ">order price (usd): </label>
+                  <label for="name" class = "deleteItem" id = "remove">Remove from Inv: </label>
                 </td>
                 <td>
-                  <input type="text" id="price" class = "addorderInput"/>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <label for="desc">order desc: </label>
-                </td>
-                <td>
-                  <input type="text" id="desc" class = "addorderInput"/>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <label for="count">order count: </label>
-                </td>
-                <td>
-                  <input type="text" id="count" class = "addorderInput"/>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <label for="category">order category: </label>
-                </td>
-                <td>
-                  <input type="text" id="category" class = "addorderInput"/>
+                  <input type="radio" id="remove" class = "addorderInput"/>
                 </td>
               </tr>
             </table>
-            <button id="addorderButton">Send order to inventory!</button>
+            <span>Items</span>
+            <table class = "dataTable">
+              <thead><tr><td>Item Id</td><td>Item Count</td></tr></thead>
+              <tbody id = "orderItems">
+                <tr><td><input  type="text" class="tableInput orderItemId" placeholder="Item ID"></td><td><input placeholder="Count" class="tableInput orderItemCount"  type="text"></td></tr>
+                <tr><td><input  type="text" class="tableInput orderItemId" placeholder="Item ID"></td><td><input placeholder="Count" class="tableInput orderItemCount"  type="text"></td></tr>
+                <tr><td><input  type="text" class="tableInput orderItemId" placeholder="Item ID"></td><td><input placeholder="Count" class="tableInput orderItemCount"  type="text"></td></tr>
+                <tr><td><input  type="text" class="tableInput orderItemId" placeholder="Item ID"></td><td><input placeholder="Count" class="tableInput orderItemCount"  type="text"></td></tr>
+                <tr><td><input type="text" class="tableInput orderItemId" placeholder="Item ID"></td><td><input placeholder="Count" class="tableInput orderItemCount"  type="text"></td></tr>
+              </tbody>
+            </table>  
+            <br>            
+            <button id="addOrderButton">Add Order!</button>
           </form>
         </div>
         <div id="removeorder" class="orderBox">
@@ -90,14 +70,14 @@
                         <label for="id">order id: </label>
                     </td>
                     <td>
-                        <input type="text" id="deleteInput" />
+                        <input type="text" id = "deleteInput"/>
                     </td>
                 </tr>
             </table>
             
           </form>
           <div class = "buttonContainer">
-              <button id="deleteorder">Delete  order from inventory!</button>
+              <button id="deleteOrder">Delete  order!</button>
           </div>
         </div>
       </div>
@@ -109,38 +89,43 @@
             <input
               type="text"
               class="searchBox"
-              placeholder="Enter Category or leave blank for all orders"
+              placeholder="Enter customer ID or leave blank"
               id = "searchInput"
             />
           </div>
           <table class="dataTable scroll">
             <thead>
-              <td >ID</td>
-              <td >order Name</td>
-              <td >order Count</td>
+              <td >Order ID</td>
+              <td >Customer ID</td>
+              <td >Order Date</td>
+              <td >Order Price</td>
             </thead>
             <tbody id = "searchResults">
             </tbody>
           </table>
         </div>
         <div id="changeQuantity" class="orderBox">
-            <h2>Change Quantity</h2>
-            <table class="dataTable scroll">
-                <thead>
-                  <td >ID</td>
-                  <td >+ / -</td>
-                  <td >Count</td>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td><input type="text" placeholder = "order Id" class = "tableInput" id = "changeInputId"></td>
-                    <td><label for="add">+</label><input type="radio" value = "add" id = "add"name = "change"><span>/</span><label for="subtract">-</label><input type="radio" checked = true name = "change"id = "subtract"></td>
-                    <td><input type="text" placeholder = "differ" class = "tableInput" id = "changeInputQuantity"></td>
+            <h2>View Order</h2>
+            <form action="">
+              <tr>
+                  <table>
+  
+                      <td>
+                          <label for="id">order id: </label>
+                      </td>
+                      <td>
+                          <input type="text" id = "findSingleOrder" />
+                      </td>
                   </tr>
-                </tbody>
               </table>
+              
+            </form>
+
               <div class = "buttonContainer">
-                <button id="sendChanges">change quantity!</button>
+                <button id="getSingleOrderButton">View Order!</button>
+            </div>
+            <br>
+            <div id="orderInfoBox">
             </div>
         </div>
       </div>

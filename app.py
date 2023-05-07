@@ -72,6 +72,27 @@ suppliers =[
         "email":"someEmail@test.com"
     }
 ]
+orders=[
+{
+    "orderId":123,
+    "customerId": 123,
+    "items":[
+                {"id":123,"quantity":1},
+                {"id":123,"quantity":1}
+            ],
+    "price":123,
+    "date":"12-12-2012"
+},
+{
+    "orderId":123,
+    "customerId": 123,
+    "items":[
+                {"id":123,"quantity":1},
+                {"id":123,"quantity":1}
+            ],
+    "date":"12-12-2012",
+    "price":123,
+}]
 # ----- this route may not be used -------
 # # find a single item 
 # @app.route('/api/item/<int :id>',method = "GET")
@@ -192,7 +213,7 @@ def addSupplier():
 
 # return all items
 @app.route('/api/suppliers/', methods=["GET"])
-@app.route('/api/suppliers/<string:category>', methods=["GET"])
+@app.route('/api/suppliers/<string:phone>', methods=["GET"])
 def getSupplier(phone = 0):
     print(phone)
     # return all supplier if phone number = 0, or return the supplier that has a matching phone number.
@@ -213,6 +234,55 @@ def deleteSupplier():
     # return {"msg":"failed"}, 400
     return {"msg":"supplier removed"}, 200
 
+# add a single item
+@app.route('/api/order/add', methods=["POST"])
+def addOrder():
+    data = request.get_json(force=True)
+    print(data)
+    # Add the code to add an supplier from the database and if it was successful with a success or fail message along with error code
+    # example body
+    # {
+#     "customerId": 123,
+#     "items":[
+#                 {"id":123,"quantity":1},
+#                 {"id":123,"quantity":1}
+#             ],
+#     "orderDate":"12-12-2012",
+#     "totalCost":123,
+#       }
+    # return {"msg":"failed"}, 400
+    return {"msg":"order added"}, 200
+
+# return all items
+@app.route('/api/orders/', methods=["GET"])
+@app.route('/api/orders/<string:id>', methods=["GET"])
+def getOrders(id = 0):
+    print(id)
+    # return all supplier if phone number = 0, or return the supplier that has a matching phone number.
+    # this can be done with phone number, or if its easier I can change it to id, I assumed phone number is more practical
+    return jsonify(orders)
+
+# return a order by id
+@app.route('/api/order/<string:id>', methods=["GET"])
+def getOrder(id = 0):
+    print(id)
+    # return all supplier if phone number = 0, or return the supplier that has a matching phone number.
+    # this can be done with phone number, or if its easier I can change it to id, I assumed phone number is more practical
+    return jsonify(orders[0])
+
+#delete a single item
+@app.route('/api/order/delete',methods=["DELETE","POST"])
+def deleteOrder():
+    data = request.get_json(force=True)
+    print(data)
+    # Add the code to remove an supplier from the database and if it was successful with a success or fail message along with error code
+    # this can be done with phone number, or if its easier I can change it to id, I assumed phone number is more practical
+    # example body 
+    # {
+    #     "phone": 123,
+    # }
+    # return {"msg":"failed"}, 400
+    return {"msg":"order removed"}, 200
 
 if __name__ == "__main__":
     app.run()
