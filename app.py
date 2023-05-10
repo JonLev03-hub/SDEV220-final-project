@@ -1,6 +1,7 @@
 from flask import Flask, render_template
 from flask import request, jsonify
 from flask_cors import CORS
+from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 CORS(app)
@@ -93,6 +94,26 @@ orders=[
     "date":"12-12-2012",
     "price":123,
 }]
+
+
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.db'
+db = SQLAlchemy(app)
+
+
+# add all of the database table models here
+class Item(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String)
+    supplier_id = db.Column(db.Integer)
+    price = db.Column(db.Integer)
+    desc = db.Column(db.String)
+    count = db.Column(db.Integer)
+    category = db.Column(db.String)
+
+
+with app.app_context():
+    db.create_all()
+
 # ----- this route may not be used -------
 # # find a single item 
 # @app.route('/api/item/<int :id>',method = "GET")
@@ -107,31 +128,32 @@ orders=[
 def deleteItem():
     data = request.get_json(force=True)
     print(data)
-    # Add the code to remove an item from the database and if it was successful with a success or fail message along with error code
-    # example body 
-    # {
-    #     "id": 123,
-    # }
-    # return {"msg":"failed"}, 400
+    item = Item.query.get(data["id"])
+    if item is None:
+        return {"error": "Book has not been found"}
+    db.session.delete(item)
+    db.session.commit()
     return {"msg":"item removed"}, 200
 
 # add a single item
 @app.route('/api/item/add', methods=["POST"])
 def addItem():
-    data = request.get_json(force=True)
-    print(data)
-    # Add the code to add an item from the database and if it was successful with a success or fail message along with error code
-    # example body
-    # {
-    #     "id": 123,
-    #     "name": "testItem",
-    #     "supplier_id": 123,
-    #     "price": 123,
-    #     "desc": "item desc",
-    #     "count": 123,
-    #     "category": "misc_category"
-    # }
-    # return {"msg":"failed"}, 400
+    try:
+        data = request.get_json(force=True)
+        print(data)
+        item = Item(
+            id = data["id"],
+            name = data["name"],
+            supplier_id = data["supplier_id"],
+            price = data["price"],
+            desc = data["desc"],
+            count = data["count"],
+            category = data["category"]
+        )
+        db.session.add(item)
+        db.session.commit()
+    except Exception as E:
+        return {"msg":str(E.args)}, 400
     return {"msg":"item added"}, 200
 
 # update item quantity
@@ -146,17 +168,44 @@ def updateItem():
     # 'quantity': ''
     # }
     # return {"msg":"failed"}, 400
+    item = Item.query.get(data["id"])
+    if item is None:
+        return {"msg": "Book has not been found"}, 400
+    if data["subtract"]:
+        if item.count < int(data["quantity"]): 
+            return {"msg": "Cant have quantity less than 0"} ,400
+        item.count -= int(data["quantity"])
+        print("Here")
+    else:
+        item.count += int(data["quantity"])
+        print("Here else")
+
+    db.session.commit()
     return {"msg":"item quantity updated"}, 200
 
 # return all items
 @app.route('/api/items/', methods=["GET"])
 @app.route('/api/items/<string:category>', methods=["GET"])
 def getItems(category = "all"):
-    print(category)
-    # return all items with the exact same category. If the category is all return all items. return in a list.
+    items = []
+    if category == "all":
+        query  = Item.query.all()
+    else:
+        query  = Item.query.filter(Item.category == category)
+    for item in query:
+        items.append({
+                    "id": item.id,
+                    "name": item.name,
+                    "supplier_id": item.supplier_id,
+                    "price": item.price,
+                    "desc": item.desc,
+                    "count": item.count,
+                    "category": item.category
+        })
+
     return jsonify(items)
 
-# add a single item
+# add a single customer
 @app.route('/api/customer/add', methods=["POST"])
 def addCustomer():
     data = request.get_json(force=True)
