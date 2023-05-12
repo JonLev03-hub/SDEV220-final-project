@@ -1,0 +1,142 @@
+* {
+    margin:none;
+    padding:none;
+    font-family: 'Courier New', Courier, monospace;
+}
+body{
+    background-color:azure;
+}
+.nav {
+    width:100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.nav a {
+    color:black;
+    text-decoration: none;
+    background-color: aquamarine;
+    display:inline-block;
+    padding:15px 0px;
+    width:100px;
+    margin:10px;
+    text-align: center;
+    border-radius: 10px;
+    font-weight: bold;
+}
+.nav a.here{
+    background-color: aqua;
+}
+#main{
+    display: flex;
+    justify-content: center;
+    align-items: space-around;
+    /* background-color:blue; */
+    width:80vw;
+    margin:auto;
+}
+.supplierBox{
+    min-height:200px;
+    width:35vw;
+    background-color: white;
+    margin:10px;
+    border-radius: 20px;
+    border:2px solid peachpuff;
+    padding:10px;
+    display: flex;
+    flex-direction: column;
+}
+.supplierBox h2 {
+    text-align:center;
+}
+.supplierBox form 
+{
+    display: flex;align-items: center;justify-content: center;
+    flex-direction: column;
+}
+
+.search
+{
+    border:2px solid lightgray;
+    border-radius: 13px;
+    height:25px;
+    display:flex;
+    align-items: center;
+}
+.search button {
+    border:none;
+    border-right: 2px solid lightgrey;
+    line-height: 25px;
+    padding: 0px 5px;
+    font-weight: bold;
+    cursor: pointer;
+    outline:none;
+    background-color:transparent;
+    border-radius: 11px 0 0 11px;
+}
+
+.search button:hover {
+    background-color:lightgrey;
+}
+
+.searchBox{
+    width:80%;
+    border:none;
+    /* background-color: red; */
+}
+.searchBox:focus{
+    outline:none;
+}
+
+.dataTable{
+    margin-top:10px;
+    background:rgb(172, 172, 172);
+
+}
+.scroll {
+    max-height: 200px;
+    overflow-y: scroll;
+    overflow-x: scroll;
+}
+.dataTable thead td {
+    background: lightgray;
+}
+
+.dataTable td {
+    background-color: whitesmoke;
+}
+::-webkit-scrollbar {
+    width: 8px;
+    height:8px;
+    /* border: none; */
+}
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 10px;
+    /* height:20px; */
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+
+  .buttonContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 10px;
+  }
+  .tableInput{
+    width:75px;
+    background-color: transparent;
+    outline:none;
+    border:none;
+    padding:none;
+  }
+  .tableInput:focus {
+    outline: none;
+  }
