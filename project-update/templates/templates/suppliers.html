@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="./suppliers.css" />
+  </head>
+  <body>
+    <div class="nav">
+      <a href="" id="items">Items</a>
+      <a href="" id="orders">Orders</a>
+      <a href="" id="Customers">Customers</a>
+      <a href="" id="Suppliers" class="here">Suppliers</a>
+    </div>
+    <div id="main">
+      <div id="left">
+        <div id="addsupplier" class="supplierBox">
+          <form action="" id = "addSupplierForm">
+            <h2>Add suppliers</h2>
+            <table>
+              <tr>
+                <td>
+                  <label for="id">supplier id: </label>
+                </td>
+                <td>
+                  <input type="text" id="id" class = "addsupplierInput"/>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <label for="name">supplier name: </label>
+                </td>
+                <td>
+                  <input type="text" id="name" class = "addsupplierInput"/>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <label for="phone">supplier phone: </label>
+                </td>
+                <td>
+                  <input type="text" id="phone" class = "addsupplierInput"/>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <label for="email">supplier email: </label>
+                </td>
+                <td>
+                  <input type="text" id="email" class = "addsupplierInput"/>
+                </td>
+              </tr>
+            </table>
+            <button id="addSupplierButton">Add new Supplier!</button>
+          </form>
+        </div>
+        <div id="removesupplier" class="supplierBox">
+          <h2>Remove supplier</h2>
+          <form action="">
+            <tr>
+                <table>
+
+                    <td>
+                        <label for="phone">supplier phone: </label>
+                    </td>
+                    <td>
+                        <input type="text" id="deleteInput" />
+                    </td>
+                </tr>
+            </table>
+            
+          </form>
+          <div class = "buttonContainer">
+              <button id="deleteSupplier">Delete  supplier!</button>
+          </div>
+        </div>
+      </div>
+      <div id="right">
+      
+      </div>
+      <div id="findsupplier" class="supplierBox">
+        <h2>Find suppliers</h2>
+        <div class="search">
+          <button id="searchButton">Search</button>
+          <input
+            type="text"
+            class="searchBox"
+            placeholder="Enter Phone number or leave blank for All"
+            id = "searchInput"
+          />
+        </div>
+        <table class="dataTable scroll">
+          <thead>
+            <td >ID</td>
+            <td >Name</td>
+            <td >phone number</td>
+            <td >email</td>
+          </thead>
+          <tbody id = "searchResults">
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <script src="suppliers.js"></script>
+  </body>
+</html>

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/orders.css') }}" />
+  </head>
+  <body>
+    <div class="nav">
+      <a href="" id="Items" >Items</a>
+      <a href="" id="Orders" class="here">Orders</a>
+      <a href="" id="Customers">Customers</a>
+      <a href="" id="suppliers">Suppliers</a>
+    </div>
+    <div id="main">
+      <div id="left">
+        <div id="addOrder" class="orderBox">
+          <form action="" id = "addorderForm">
+            <h2>Add orders</h2>
+            <table>
+              <tr>
+                <td>
+                  <label for="id">order id: </label>
+                </td>
+                <td>
+                  <input type="text" id="id" class = "addorderInput"/>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <label for="name" class = "deleteItem">customer id: </label>
+                </td>
+                <td>
+                  <input type="text" id="customer" class = "addorderInput"/>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <label for="name" class = "deleteItem" id = "remove">Remove from Inv: </label>
+                </td>
+                <td>
+                  <input type="radio" id="remove" class = "addorderInput"/>
+                </td>
+              </tr>
+            </table>
+            <span>Items</span>
+            <table class = "dataTable">
+              <thead><tr><td>Item Id</td><td>Item Count</td></tr></thead>
+              <tbody id = "orderItems">
+                <tr><td><input  type="text" class="tableInput orderItemId" placeholder="Item ID"></td><td><input placeholder="Count" class="tableInput orderItemCount"  type="text"></td></tr>
+                <tr><td><input  type="text" class="tableInput orderItemId" placeholder="Item ID"></td><td><input placeholder="Count" class="tableInput orderItemCount"  type="text"></td></tr>
+                <tr><td><input  type="text" class="tableInput orderItemId" placeholder="Item ID"></td><td><input placeholder="Count" class="tableInput orderItemCount"  type="text"></td></tr>
+                <tr><td><input  type="text" class="tableInput orderItemId" placeholder="Item ID"></td><td><input placeholder="Count" class="tableInput orderItemCount"  type="text"></td></tr>
+                <tr><td><input type="text" class="tableInput orderItemId" placeholder="Item ID"></td><td><input placeholder="Count" class="tableInput orderItemCount"  type="text"></td></tr>
+              </tbody>
+            </table>  
+            <br>            
+            <button id="addOrderButton">Add Order!</button>
+          </form>
+        </div>
+        <div id="removeorder" class="orderBox">
+          <h2>Remove order</h2>
+          <form action="">
+            <tr>
+                <table>
+
+                    <td>
+                        <label for="id">order id: </label>
+                    </td>
+                    <td>
+                        <input type="text" id = "deleteInput"/>
+                    </td>
+                </tr>
+            </table>
+            
+          </form>
+          <div class = "buttonContainer">
+              <button id="deleteOrder">Delete  order!</button>
+          </div>
+        </div>
+      </div>
+      <div id="right">
+        <div id="findorder" class="orderBox">
+          <h2>Find orders</h2>
+          <div class="search">
+            <button id="searchButton">Search</button>
+            <input
+              type="text"
+              class="searchBox"
+              placeholder="Enter customer ID or leave blank"
+              id = "searchInput"
+            />
+          </div>
+          <table class="dataTable scroll">
+            <thead>
+              <td >Order ID</td>
+              <td >Customer ID</td>
+              <td >Order Date</td>
+              <td >Order Price</td>
+            </thead>
+            <tbody id = "searchResults">
+            </tbody>
+          </table>
+        </div>
+        <div id="changeQuantity" class="orderBox">
+            <h2>View Order</h2>
+            <form action="">
+              <tr>
+                  <table>
+  
+                      <td>
+                          <label for="id">order id: </label>
+                      </td>
+                      <td>
+                          <input type="text" id = "findSingleOrder" />
+                      </td>
+                  </tr>
+              </table>
+              
+            </form>
+
+              <div class = "buttonContainer">
+                <button id="getSingleOrderButton">View Order!</button>
+            </div>
+            <br>
+            <div id="orderInfoBox">
+            </div>
+        </div>
+      </div>
+    </div>
+    <script src="orders.js"></script>
+  </body>
+</html>
