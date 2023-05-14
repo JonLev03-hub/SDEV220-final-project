@@ -2,98 +2,10 @@ from flask import Flask, render_template
 from flask import request, jsonify
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
+from datetime import datetime as dt
 
 app = Flask(__name__)
 CORS(app)
-
-items = [{
-        "id": 123,
-        "name": "testItem",
-        "supplier_id": 123,
-        "price": 123,
-        "desc": "item desc",
-        "count": 123,
-        "category": "misc_category"
-    },
-    {
-        "id": 123,
-        "name": "testItem",
-        "supplier_id": 123,
-        "price": 123,
-        "desc": "item desc",
-        "count": 123,
-        "category": "misc_category"
-    },
-    {
-        "id": 123,
-        "name": "testItem",
-        "supplier_id": 123,
-        "price": 123,
-        "desc": "item desc",
-        "count": 123,
-        "category": "misc_category"
-    }]
-customers =[
-        {
-        "id": 123,
-        "name": "testItem",
-        "phone":1231231231,
-        "email":"someEmail@test.com"
-    },
-    {
-        "id": 123,
-        "name": "testItem",
-        "phone":1231231231,
-        "email":"someEmail@test.com"
-    },
-    {
-        "id": 123,
-        "name": "testItem",
-        "phone":1231231231,
-        "email":"someEmail@test.com"
-    }
-]
-suppliers =[
-        {
-        "id": 123,
-        "name": "testItem",
-        "phone":1231231231,
-        "email":"someEmail@test.com"
-    },
-    {
-        "id": 123,
-        "name": "testItem",
-        "phone":1231231231,
-        "email":"someEmail@test.com"
-    },
-    {
-        "id": 123,
-        "name": "testItem",
-        "phone":1231231231,
-        "email":"someEmail@test.com"
-    }
-]
-orders=[
-{
-    "orderId":123,
-    "customerId": 123,
-    "items":[
-                {"id":123,"quantity":1},
-                {"id":123,"quantity":1}
-            ],
-    "price":123,
-    "date":"12-12-2012"
-},
-{
-    "orderId":123,
-    "customerId": 123,
-    "items":[
-                {"id":123,"quantity":1},
-                {"id":123,"quantity":1}
-            ],
-    "date":"12-12-2012",
-    "price":123,
-}]
 
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.db'
@@ -110,18 +22,30 @@ class Item(db.Model):
     count = db.Column(db.Integer)
     category = db.Column(db.String)
 
+# add all of the database table models here
+class Supplier(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String)
+    phone = db.Column(db.String)
+    email = db.Column(db.String)
+    # add all of the database table models here
+class Customer(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String)
+    phone = db.Column(db.String)
+    email = db.Column(db.String)
+class Order(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    customerid = db.Column(db.Integer)
+    date = db.Column(db.Date)
+    items = db.Column(db.String)
 
 with app.app_context():
     db.create_all()
 
-# ----- this route may not be used -------
-# # find a single item 
-# @app.route('/api/item/<int :id>',method = "GET")
-# def item(id):
-#     data = request.get_json(force=True)
-#     print(data)
-#     # change this to return a single item from the database that matches the item id or return an error
-#     return items[0]
+@app.route("/")
+def itemsPage():
+    return render_template("items.html")
 
 #delete a single item
 @app.route('/api/item/delete',methods=["DELETE","POST"])
@@ -130,7 +54,7 @@ def deleteItem():
     print(data)
     item = Item.query.get(data["id"])
     if item is None:
-        return {"error": "Book has not been found"}
+        return {"msg": "Item has not been found"}
     db.session.delete(item)
     db.session.commit()
     return {"msg":"item removed"}, 200
@@ -153,6 +77,8 @@ def addItem():
         db.session.add(item)
         db.session.commit()
     except Exception as E:
+        if(data["id"] == ""):
+            return {"msg":"Please enter all fields"}, 400
         return {"msg":str(E.args)}, 400
     return {"msg":"item added"}, 200
 
@@ -161,16 +87,10 @@ def addItem():
 def updateItem():
     data = request.get_json(force=True)
     print(data)
-    # Add the code to add an item from the database and if it was successful with a success or fail message along with error code
-    # {
-    # 'id': '', 
-    # 'subtract': True,
-    # 'quantity': ''
-    # }
-    # return {"msg":"failed"}, 400
+
     item = Item.query.get(data["id"])
     if item is None:
-        return {"msg": "Book has not been found"}, 400
+        return {"msg": "Item has not been found"}, 400
     if data["subtract"]:
         if item.count < int(data["quantity"]): 
             return {"msg": "Cant have quantity less than 0"} ,400
@@ -202,71 +122,99 @@ def getItems(category = "all"):
                     "count": item.count,
                     "category": item.category
         })
-
+    print(items)
     return jsonify(items)
 
 # add a single customer
 @app.route('/api/customer/add', methods=["POST"])
 def addCustomer():
     data = request.get_json(force=True)
-    print(data)
-    # Add the code to add an customer from the database and if it was successful with a success or fail message along with error code
-    # example body
-    # {
-    #     "id": 123,
-    #     "name": "testItem",
-    #     "phone":1231231231,
-    #     "email":"someEmail@test.com"
-    # }
-    # return {"msg":"failed"}, 400
-    return {"msg":"customer added"}, 200
+    try:
+        data = request.get_json(force=True)
+        print(data)
+        customer = Customer(
+        id = data["id"],
+        name = data["name"],
+        phone = data["phone"],
+        email = data["email"],
+        )
+        db.session.add(customer)
+        db.session.commit()
+    except Exception as E:
+        if data["id"] == "":
+            return {"msg": "Please Enter All Fields"}, 400
+        return {"msg":str(E.args)}, 400
+    return {"msg":"item added"}, 200
 
 # return all items
 @app.route('/api/customers/', methods=["GET"])
-@app.route('/api/customers/<string:category>', methods=["GET"])
+@app.route('/api/customers/<string:phone>', methods=["GET"])
 def getCustomers(phone = 0):
-    print(phone)
-    # return all customers if phone number = 0, or return the customer that has a matching phone number.
-    # this can be done with phone number, or if its easier I can change it to id, I assumed phone number is more practical
+    customers = []
+    if phone == 0:
+        query  = Customer.query.all()
+    else:
+        query  = Customer.query.filter(Customer.phone == phone)
+    for customer in query:
+        customers.append({
+                    "id": customer.id,
+                    "name": customer.name,
+                    "phone":customer.phone,
+                    "email" : customer.email
+        })
+
     return jsonify(customers)
 
-#delete a single item
+#delete a single customer
 @app.route('/api/customer/delete',methods=["DELETE","POST"])
 def deleteCustomer():
     data = request.get_json(force=True)
     print(data)
-    # Add the code to remove an customer from the database and if it was successful with a success or fail message along with error code
-    # this can be done with phone number, or if its easier I can change it to id, I assumed phone number is more practical
-    # example body 
-    # {
-    #     "phone": 123,
-    # }
-    # return {"msg":"failed"}, 400
-    return {"msg":"customer removed"}, 200
+    customer = Customer.query.get(data["id"])
+    if customer is None:
+        return {"msg": "Customer has not been found"}
+    db.session.delete(customer)
+    db.session.commit()
+    return {"msg":"Customer removed"}, 200
 
-# add a single item
+# add a single supplier
 @app.route('/api/supplier/add', methods=["POST"])
 def addSupplier():
     data = request.get_json(force=True)
-    print(data)
-    # Add the code to add an supplier from the database and if it was successful with a success or fail message along with error code
-    # example body
-    # {
-    #     "id": 123,
-    #     "name": "testItem",
-    #     "phone":1231231231,
-    #     "email":"someEmail@test.com"
-    # }
-    # return {"msg":"failed"}, 400
+    try:
+        data = request.get_json(force=True)
+        print(data)
+        supplier = Supplier(
+        id = data["id"],
+        name = data["name"],
+        phone = data["phone"],
+        email = data["email"],
+        )
+        db.session.add(supplier)
+        db.session.commit()
+    except Exception as E:
+        if data["id"] == "":
+            return {"msg": "Please Enter All Fields"}, 400
+        return {"msg":str(E.args)}, 400
     return {"msg":"supplier added"}, 200
 
 # return all items
 @app.route('/api/suppliers/', methods=["GET"])
 @app.route('/api/suppliers/<string:phone>', methods=["GET"])
 def getSupplier(phone = 0):
-    print(phone)
-    # return all supplier if phone number = 0, or return the supplier that has a matching phone number.
-    # this can be done with phone number, or if its easier I can change it to id, I assumed phone number is more practical
+    suppliers = []
+    if phone == 0:
+        query  = Supplier.query.all()
+    else:
+        query  = Supplier.query.filter(Supplier.phone == phone)
+    for supplier in query:
+        suppliers.append({
+                    "id": supplier.id,
+                    "name": supplier.name,
+                    "phone":supplier.phone,
+                    "email" : supplier.email
+        })
+
     return jsonify(suppliers)
 
 #delete a single item
@@ -274,63 +222,76 @@ def getSupplier(phone = 0):
 def deleteSupplier():
     data = request.get_json(force=True)
     print(data)
-    # Add the code to remove an supplier from the database and if it was successful with a success or fail message along with error code
-    # this can be done with phone number, or if its easier I can change it to id, I assumed phone number is more practical
-    # example body 
-    # {
-    #     "phone": 123,
-    # }
-    # return {"msg":"failed"}, 400
-    return {"msg":"supplier removed"}, 200
+    supplier = Supplier.query.get(data["id"])
+    if supplier is None:
+        return {"msg": "Supplier has not been found"}
+    db.session.delete(supplier)
+    db.session.commit()
+    return {"msg":"Supplier removed"}, 200
 
 # add a single item
 @app.route('/api/order/add', methods=["POST"])
 def addOrder():
     data = request.get_json(force=True)
-    print(data)
-    # Add the code to add an supplier from the database and if it was successful with a success or fail message along with error code
-    # example body
-    # {
-#     "customerId": 123,
-#     "items":[
-#                 {"id":123,"quantity":1},
-#                 {"id":123,"quantity":1}
-#             ],
-#     "orderDate":"12-12-2012",
-#     "totalCost":123,
-#       }
-    # return {"msg":"failed"}, 400
+    try:
+        data = request.get_json(force=True)
+        print(data)
+        order = Order(
+        id = data["id"],
+        customerid = data["customer"],
+        items = str(data["items"]),
+        date = dt.now()
+        )
+        db.session.add(order)
+        db.session.commit()
+    except Exception as E:
+        if data["id"] == "":
+            return {"msg": "Please Enter All Fields"}, 400
+        return {"msg":str(E.args)}, 400
     return {"msg":"order added"}, 200
 
 # return all items
 @app.route('/api/orders/', methods=["GET"])
-@app.route('/api/orders/<string:id>', methods=["GET"])
-def getOrders(id = 0):
-    print(id)
-    # return all supplier if phone number = 0, or return the supplier that has a matching phone number.
-    # this can be done with phone number, or if its easier I can change it to id, I assumed phone number is more practical
+def getOrders():
+    orders = []
+
+    query  = Order.query.all()
+    
+    for item in query:
+        orders.append({
+                    "id": item.id,
+                    "customer": item.customerid,
+                    "date":str(item.date),
+        })
+    print(orders)
     return jsonify(orders)
 
 # return a order by id
 @app.route('/api/order/<string:id>', methods=["GET"])
 def getOrder(id = 0):
-    print(id)
-    # return all supplier if phone number = 0, or return the supplier that has a matching phone number.
-    # this can be done with phone number, or if its easier I can change it to id, I assumed phone number is more practical
-    return jsonify(orders[0])
+    # data = request.get_json(force=True)
+    # print(data)
+    order = Order.query.get(id)
+    if order is None:
+        return {"msg": "order has not been found"}
+    order = {
+                    "orderId": order.id,
+                    "customerId": order.customerid,
+                    "date":str(order.date),
+                    "items" :eval(order.items)
+        }
+    return order, 200
 
 #delete a single item
 @app.route('/api/order/delete',methods=["DELETE","POST"])
 def deleteOrder():
     data = request.get_json(force=True)
     print(data)
-    # Add the code to remove an supplier from the database and if it was successful with a success or fail message along with error code
-    # this can be done with phone number, or if its easier I can change it to id, I assumed phone number is more practical
-    # example body 
-    # {
-    #     "phone": 123,
-    # }
-    # return {"msg":"failed"}, 400
+    order = Order.query.get(data["id"])
+    if order is None:
+        return {"msg": "order has not been found"}
+    db.session.delete(order)
+    db.session.commit()
     return {"msg":"order removed"}, 200
 
 if __name__ == "__main__":

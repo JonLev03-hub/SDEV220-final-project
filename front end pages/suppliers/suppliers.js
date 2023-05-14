@@ -53,7 +53,7 @@ document
 
     let input = document.getElementById("deleteInput").value;
     let result = {
-      phone: input,
+      id: input,
     };
     let res = await fetch(`http://127.0.0.1:5000/api/supplier/delete`, {
       method: "DELETE",

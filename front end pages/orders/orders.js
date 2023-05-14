@@ -11,16 +11,13 @@ document
 
     data_items.forEach((item) => {
       result[item] = form[item].value;
-      if (item == "remove") {
-        result[item] = form[item].checked;
-        // console.log(form[item].checked);
-      }
     });
 
     let ids = document.getElementsByClassName("orderItemId");
     let counts = document.getElementsByClassName("orderItemCount");
     console.log(ids);
     for (let i = 0; i < 5; i++) {
+      if (ids[i].value == "") continue;
       result.items.push({ id: ids[i].value, count: counts[i].value });
     }
 
@@ -58,7 +55,7 @@ document
     let table = document.getElementById("searchResults");
     table.innerHTML = "";
     json.forEach((item) => {
-      table.innerHTML += `<tr><td>${item.orderId}</td><td>${item.customerId}</td><td>${item.date}</td><td>${item.price}</td></tr>`;
+      table.innerHTML += `<tr><td>${item.id}</td><td>${item.customer}</td><td>${item.date}</td></tr>`;
     });
   });
 
@@ -98,11 +95,11 @@ document
 
     // edit the table data
     let box = document.getElementById("orderInfoBox");
-    let html = ` <div>Order Id: ${json.orderId}</div><div>Customer Id: ${json.customerId}</div><div>Order Date: ${json.date}</div><div>Order Price: ${json.price}</div><br><span>Items</span><table class = "dataTable"><thead><tr><td>Item Id</td><td>Item Count</td></tr></thead><tbody>`;
+    let html = ` <div>Order Id: ${json.orderId}</div><div>Customer Id: ${json.customerId}</div><span>Items</span><table class = "dataTable"><thead><tr><td>Item Id</td><td>Item Count</td></tr></thead><tbody>`;
     for (item in json.items) {
       item = json.items[item];
       console.log(item);
-      html += `<tr><td>${item.id}</td><td>${item.quantity}</td></tr>`;
+      html += `<tr><td>${item.id}</td><td>${item.count}</td></tr>`;
     }
     html += "</tbody></table>  ";
     box.innerHTML = html;
