@@ -42,11 +42,19 @@ class Order(db.Model):
 
 with app.app_context():
     db.create_all()
-
+@app.route("/items")
 @app.route("/")
 def itemsPage():
     return render_template("items.html")
-
+@app.route("/orders")
+def ordersPage():
+    return render_template("orders.html")
+@app.route("/customers")
+def customersPage():
+    return render_template("customers.html")
+@app.route("/suppliers")
+def suppliersPage():
+    return render_template("suppliers.html")
 #delete a single item
 @app.route('/api/item/delete',methods=["DELETE","POST"])
 def deleteItem():
