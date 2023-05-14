@@ -1,3 +1,9 @@
+document.addEventListener("keypress", function (e) {
+  if (e.keyCode === 13 || e.which === 13) {
+    e.preventDefault();
+    return false;
+  }
+});
 document
   .getElementById("addOrderButton")
   .addEventListener("click", async (event) => {
@@ -95,7 +101,7 @@ document
 
     // edit the table data
     let box = document.getElementById("orderInfoBox");
-    let html = ` <div>Order Id: ${json.orderId}</div><div>Customer Id: ${json.customerId}</div><span>Items</span><table class = "dataTable"><thead><tr><td>Item Id</td><td>Item Count</td></tr></thead><tbody>`;
+    let html = ` <div>Order Id: ${json.orderId}</div><div>Customer Id: ${json.customerId}</div><div>Order Date: ${json.date}</div><span>Items</span><table class = "dataTable"><thead><tr><td>Item Id</td><td>Item Count</td></tr></thead><tbody>`;
     for (item in json.items) {
       item = json.items[item];
       console.log(item);

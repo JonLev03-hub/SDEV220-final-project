@@ -1,3 +1,9 @@
+document.addEventListener("keypress", function (e) {
+  if (e.keyCode === 13 || e.which === 13) {
+    e.preventDefault();
+    return false;
+  }
+});
 document
   .getElementById("addItemButton")
   .addEventListener("click", async (event) => {
@@ -52,7 +58,7 @@ document
     let table = document.getElementById("searchResults");
     table.innerHTML = "";
     json.forEach((item) => {
-      table.innerHTML += `<tr><td>${item.id}</td><td>${item.name}</td><td>${item.count}</td></tr>`;
+      table.innerHTML += `<tr><td>${item.id}</td><td>${item.name}</td><td>${item.count}</td><td>${item.category}</td></tr>`;
     });
   });
 
