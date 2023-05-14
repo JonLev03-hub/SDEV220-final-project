@@ -1,5 +1,5 @@
 # SDEV220-final-project
-
+[Trello Board](https://trello.com/b/aBubWfla/final-project)  </br>
 [Final Project Launch document](https://docs.google.com/document/d/1Z90PjYnpw-Ow5EOVVITlBRNZac2CWHlNpFsoIt7qHpE/edit).
 
 
@@ -34,4 +34,3 @@ Because the front end pages are all going to be reading, updating, and deleting 
 ![image](https://user-images.githubusercontent.com/81537476/235364087-398e41da-23ef-42ba-a3bf-3f8f131fcb10.png)
 
 low users to create items, search items, remove items, and adjust item quantities. The other pages follow an almost identical format, with slightly different input and viewing options depending on the page. 
-
