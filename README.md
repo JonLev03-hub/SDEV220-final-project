@@ -28,12 +28,10 @@ accepts a json object that containst all the items to create a record for that t
 DELETE:: /api/<category>/remove
 accepts a json object that containst an id, and returns a success or failure response
 
-###Front end design
+### Front end design
 Because the front end pages are all going to be reading, updating, and deleting records they will have very simmilar format. The design below is for the items page. It is not the finalized design, but it will be used to design the other pages. 
 
 ![image](https://user-images.githubusercontent.com/81537476/235364087-398e41da-23ef-42ba-a3bf-3f8f131fcb10.png)
 
-This will allow users to create items, search items, remove items, and adjust item quantities. 
-
-
+low users to create items, search items, remove items, and adjust item quantities. The other pages follow an almost identical format, with slightly different input and viewing options depending on the page. 
 
